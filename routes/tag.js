@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var taglist = require('../service/taglist');
-
+const uuidv1 = require('uuid/v1');
 /* GET users listing. */
 router.get('/test/taglist', async (req, res, next) => {
   try {
@@ -15,7 +15,8 @@ router.get('/test/taglist', async (req, res, next) => {
 
 router.post('/test/addtag', async (req, res, next) => {
 	try{
-        let result = await taglist.insert(req.body.inputValue);
+        let id = uuidv1().replace(/-/g,"");
+        let result = await taglist.insert(req.body.inputValue,id);
         res.send("success");
 	}catch(e){
         res.send(e);

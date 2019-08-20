@@ -5,6 +5,7 @@ const uuidv1 = require('uuid/v1');
 var path = require('path');
 var bloglist = require('../service/bloglist');
 var fs = require('fs');
+var taglist = require('../service/taglist');
 
 /* GET home page. */
 router.get('/test/showbloglist', async (req, res, next) => {
@@ -16,7 +17,8 @@ router.get('/test/showbloglist', async (req, res, next) => {
         res.send(result);
     }
     else{
-        let  result = await bloglist.showByTagId(page*3,tagId);
+        let tagname = await taglist.findname(tagId);
+        let  result = await bloglist.showByTagId(page*3,tagname[0].tag);
         console.log(result);
         res.send(result);
     }
@@ -54,7 +56,7 @@ router.post('/test/postBlog',upload.single('file'),  async (req, res, next) => {
         let hour = date.getHours();
         let minute = date.getMinutes();
         params.time = year+'年'+month+'月'+day+'日 '+hour+':'+`${minute}`.padStart(2,"0");
-        params.Id = uuidv1();
+        params.Id = uuidv1().replace(/-/g,"");
         let result = await bloglist.insert(params.Id,params.imgurl,params.time,params.title,params.content.replace(/'/g,'"'),params.tag)
         
         res.send("success");
@@ -98,7 +100,6 @@ router.get('/test/deleteBlog', async (req, res, next) =>{
         res.send(e);
     }
 })
-
 
 module.exports = router;
 

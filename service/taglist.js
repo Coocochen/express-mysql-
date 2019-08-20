@@ -12,9 +12,9 @@ let show = () => {
 
 exports.show = show;
 
-let insert = (inputValue) => {
+let insert = (inputValue,id) => {
 	return new Promise((resolve,reject) => {
-		db.query(`insert into taglist values ('${inputValue}','${inputValue}')`,(err,rows) => {
+		db.query(`insert into taglist values ('${id}','${inputValue}')`,(err,rows) => {
 			if(err) {
 				reject(err);
 			}
@@ -37,3 +37,16 @@ let remove = (removedTag) => {
 }
 
 exports.remove = remove;
+
+let findname = (id)=>{
+  return new Promise((resolve,reject) => {
+    db.query(`select tag from taglist where id = '${id}'`,(err,rows) => {
+      if(err){
+        reject(err);
+      }
+      resolve(rows);
+    })
+  })
+}
+
+exports.findname = findname;

@@ -1,8 +1,8 @@
 const db = require('../config/db')
 
-let showByTagId = (page,tagId) => {
+let showByTagId = (page,tag) => {
   return new  Promise((resolve, reject) => {
-    db.query(`select * from bloglist where tag='${tagId}' order by time desc limit ${page},3`, (err, rows) => {
+    db.query(`select * from bloglist where tag='${tag}' order by time desc limit ${page},3`, (err, rows) => {
       if(err) {
         reject(err);
       }

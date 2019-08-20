@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const url = require('url');
 
 var indexRouter = require('./routes/index');
 var tagRouter = require('./routes/tag');
@@ -27,6 +28,11 @@ app.use('/tag', tagRouter);
 app.use('/photos',photosRouter);
 app.use('/admin',adminRouter);
 app.use('/comment',commentRouter);
+
+app.get('/*', function (request, response){
+    console.log('url:'+url.parse(request.url).href);
+    response.sendFile(path.join(__dirname, 'public/index.html'))
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

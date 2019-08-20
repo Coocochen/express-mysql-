@@ -7,9 +7,9 @@ var bloglist = require('../service/bloglist');
 router.post('/test/addcomment', async (req, res, next) => {
 	try{
         let date = new Date();
-		let year = date.getFullYear();
-		let month = date.getMonth()+1;
-		let day = date.getDate();
+    		let year = date.getFullYear();
+    		let month = date.getMonth()+1;
+    		let day = date.getDate();
         let hour = date.getHours();
         let minute = date.getMinutes();
         let time = year+'年'+month+'月'+day+'日 '+hour+':'+`${minute}`.padStart(2,"0");
